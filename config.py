@@ -1,16 +1,18 @@
 import os
-from openai import OpenAI
 from dotenv import load_dotenv
+from openai import OpenAI
 
 # import environment variables
 load_dotenv(override=True)
 NVIDIA_API_KEY = os.getenv("NVIDIA_API_KEY")
 
-client = OpenAI(base_url="https://integrate.api.nvidia.com/v1", api_key=NVIDIA_API_KEY)
-
+client = OpenAI(
+    base_url="https://integrate.api.nvidia.com/v1",
+    api_key=NVIDIA_API_KEY,
+)
 
 completion = client.chat.completions.create(
-    model="deepseek-ai/deepseek-v4-flash",
+    model="nvidia/nemotron-3-super-120b-a12b",
     messages=[
         {
             "role": "user",
@@ -20,13 +22,20 @@ completion = client.chat.completions.create(
     temperature=1,
     top_p=0.95,
     max_tokens=16384,
-    extra_body={"chat_template_kwargs": {"thinking": True, "reasoning_effort": "high"}},
-    stream=False,
+    extra_body={
+        "chat_template_kwargs": {"enable_thinking": True},
+        "reasoning_budget": 16384,
+    },
+    stream=True,
 )
 
-reasoning = getattr(completion.choices[0].message, "reasoning", None) or getattr(
-    completion.choices[0].message, "reasoning_content", None
-)
-if reasoning:
-    print(reasoning)
-print(completion.choices[0].message.content)
+for chunk in completion:
+    if not chunk.choices:
+        continue
+    reasoning = getattr(chunk.choices[0].delta, "reasoning_content", None) or getattr(
+        chunk.choices[0].delta, "reasoning", None
+    )
+    if reasoning:
+        print(reasoning, end="", flush=True)
+    if chunk.choices[0].delta.content is not None:
+        print(chunk.choices[0].delta.content, end="", flush=True)
