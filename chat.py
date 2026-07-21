@@ -23,7 +23,7 @@ try:
         messages=[
             {
                 "role": "user",
-                "content": "Can you tell me what is the best way to learn machine learning with ai. Give me some online references, youtube tutorials and ai tools I can use for free.",
+                "content": "Can you tell me what is the best way to learn machine learning with ai. Give me some online references, youtube tutorials and ai tools I can use for free. please, don't use markdown format, but rather a simple text with bulletpoints. The titles should be in caps.",
             }
         ],
         temperature=1,
@@ -40,9 +40,9 @@ try:
         if not chunk.choices:
             continue
 
-        reasoning = getattr(chunk.choices[0].delta, "reasoning_content", None) or getattr(
-            chunk.choices[0].delta, "reasoning", None
-        )
+        reasoning = getattr(
+            chunk.choices[0].delta, "reasoning_content", None
+        ) or getattr(chunk.choices[0].delta, "reasoning", None)
         if reasoning:
             formatter.print_reasoning(reasoning)
 
