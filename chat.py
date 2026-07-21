@@ -23,7 +23,7 @@ try:
         messages=[
             {
                 "role": "user",
-                "content": "Can you tell me what is the best way to learn machine learning with ai. Give me some oneline references, youtube tutorials and ai tools I can use for free.",
+                "content": "Can you tell me what is the best way to learn machine learning with ai. Give me some online references, youtube tutorials and ai tools I can use for free.",
             }
         ],
         temperature=1,
