@@ -2,9 +2,8 @@ from chat import stream_chat
 
 
 def main():
-    prompt = input("I am your chatbot. Tell me what do you need from me?\n>: ")
 
-    prompt = prompt or (
+    prompt = input("I am your chatbot. Tell me what do you need from me?\n>: ") or (
         "Can you tell me what is the best way to learn machine learning with ai. "
         "Give me some online references, youtube tutorials and ai tools I can use for free. "
     )
