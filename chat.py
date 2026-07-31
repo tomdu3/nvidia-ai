@@ -8,7 +8,7 @@ load_dotenv(override=True)
 
 
 def stream_chat(
-    prompt: str,
+    task: str,
     model: str = "nvidia/nemotron-3-super-120b-a12b",
     temperature: float = 1.0,
     top_p: float = 0.95,
@@ -33,6 +33,12 @@ def stream_chat(
             api_key=nvidia_api_key,
         )
 
+        persona = "Act as a senior software developer who is working as a tutor. "
+        # task is defined by the user
+        context = "Bare in mind that the students you are giving answers are coding beginners. "
+        format = "Please, don't overcomplicate explanations. Don't use markdown. Try do have titles, subtitles, short explanations and bulleted point. The titles should be in caps."
+
+        prompt = persona + task + " " + context + format
         completion = client.chat.completions.create(
             model=model,
             messages=[
@@ -72,4 +78,3 @@ def stream_chat(
     except Exception as e:
         formatter.print_error(str(e))
         raise e
-
