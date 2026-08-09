@@ -36,7 +36,7 @@ def stream_chat(
         persona = "Act as a senior software developer who is working as a tutor. "
         # task is defined by the user
         context = "Bare in mind that the students you are giving answers are coding beginners. "
-        format = "Please, don't overcomplicate explanations. Don't use markdown. Try do have titles, subtitles, short explanations and bulleted point. The titles should be in caps, but subtitles in normal font. All titles and subtitles should be numbered."
+        format = "Please, don't over complicate explanations. Don't use markdown. Try do have titles, subtitles, short explanations and bulleted point. The titles should be in caps, but subtitles in normal font. All titles and subtitles should be numbered."
 
         prompt = persona + task + " " + context + format
         completion = client.chat.completions.create(
